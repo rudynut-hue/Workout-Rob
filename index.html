@@ -759,6 +759,19 @@ var PH = load(PKEY) || {};
     Object.keys(e.wk||{}).forEach(function(m){Object.keys(e.wk[m]||{}).forEach(function(k){clean(e.wk[m][k])})});
   }});
   S.mig68=1; save(KEY,S); })();
+/* v159: from Box Lift and Carry down (everything except once-a-week) start with blank reps */
+(function(){ if(S.mig69)return;
+  var go=0,KS=['reps','reps2','reps3','reps4'];
+  var clean=function(o){if(o)KS.forEach(function(k){if(o[k]!=null)o[k]=''})};
+  S.ex.forEach(function(e){
+    if(/^box lift and carry$/i.test(e.name))go=1;
+    if(go&&e.freq!=='once'){
+      clean(e.plan);
+      Object.keys(e.ov||{}).forEach(function(k){clean(e.ov[k])});
+      Object.keys(e.wk||{}).forEach(function(m){Object.keys(e.wk[m]||{}).forEach(function(k){clean(e.wk[m][k])})});
+    }
+  });
+  S.mig69=1; save(KEY,S); })();
 function persist(){save(KEY,S)}
 
 /* ---------- dates ---------- */
@@ -984,7 +997,7 @@ function viewSetup(){
       '<div class="hint" style="margin:0 0 8px">'+(S.lastBackup?'Last backup copied '+new Date(S.lastBackup).toLocaleDateString()+'. ':'No backup copied yet. ')+'Storage protection on this phone: '+(U.persisted===true?'on':U.persisted===false?'off (your phone decides)':'checking')+'.</div><textarea id="bk" aria-label="Backup data" readonly>'+esc(JSON.stringify(S,function(k,v){return k==='admin'?undefined:v}))+'</textarea><div class="tools"><button class="btn" data-a="copy">Copy this person</button>'+(PPL.list.length>1?'<button class="btn" data-a="copyall">Copy everyone</button>':'')+'</div>'+(U.allText?'<div class="hint" style="margin:8px 0">This text has all '+PPL.list.length+' people. Paste it somewhere safe.</div><textarea id="bkall" aria-label="Backup of everyone" readonly>'+esc(U.allText)+'</textarea>':'')+
       ''+(S.admin?'<textarea id="rs" placeholder="Paste a backup here" aria-label="Paste backup to restore"></textarea><div class="tools"><button class="btn" data-a="restore">Restore</button><span id="rmsg" class="hint"></span></div>':'<span id="rmsg" class="hint"></span>');
   }
-  h+='<div class="hint" style="margin-top:18px">App version 158.</div>';
+  h+='<div class="hint" style="margin-top:18px">App version 159.</div>';
   if(S.admin)h+='<div class="sec"><h2>Start over</h2></div>';
   if(U.note&&S.admin)h+='<div class="hint" role="status" style="margin:0 0 10px">'+esc(U.note)+'</div>';
   if(!S.admin){}
