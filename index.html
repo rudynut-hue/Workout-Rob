@@ -199,7 +199,7 @@ var RAW = [
  ['Nustep',1,'10 min',0,'daily'],['Arm Bike',1,'10 min',0,'daily'],['Treadmill',1,'10 min',0,'daily'],
  ['PT Exercises & Flexibility',1,'10 min',0,'daily'],['Med-X Super Stretch',1,'Optional',0,'daily'],
  ['Theraband Bilateral Flexion',3,'8-10',0,'daily'],['Theraband Horizontal Abduction',3,'8-10',0,'daily'],
- ['Theraband Bilateral External Rotation',3,'8-10',0,'daily'],['Vibratherapy',1,'Optional',0,'daily'],
+ ['Theraband Bilateral External Rotation',3,'8-10',0,'daily'],
  ['Box Lift and Carry',3,'Changes',1,'daily'],['Sled Push / Pull',3,'Changes',1,'daily'],
  ['Planks',3,'30 sec',0,'daily'],['Star Excursion Drill',3,'8-10',0,'daily'],['Screw Transfer',3,'8-10',1,'twice'],
  ['mwf','Bucket Pull Vertical|Bucket Pull Horizontal|Ladder Climbs|Squatting Variation|Farmers Carry|Lat Pulldowns|Seated Rows|Barbell Push-Ups|Tricep Pushdowns|Wall Sits|Stair Climbing Intervals|Easy Bar Curls|I\u2019s, Y\u2019s & T\u2019s'],
@@ -772,6 +772,10 @@ var PH = load(PKEY) || {};
     }
   });
   S.mig69=1; save(KEY,S); })();
+/* v160: Vibratherapy removed */
+(function(){ if(S.mig70)return;
+  S.ex=S.ex.filter(function(e){return !/^vibratherapy$/i.test(e.name)});
+  S.mig70=1; save(KEY,S); })();
 function persist(){save(KEY,S)}
 
 /* ---------- dates ---------- */
@@ -997,7 +1001,7 @@ function viewSetup(){
       '<div class="hint" style="margin:0 0 8px">'+(S.lastBackup?'Last backup copied '+new Date(S.lastBackup).toLocaleDateString()+'. ':'No backup copied yet. ')+'Storage protection on this phone: '+(U.persisted===true?'on':U.persisted===false?'off (your phone decides)':'checking')+'.</div><textarea id="bk" aria-label="Backup data" readonly>'+esc(JSON.stringify(S,function(k,v){return k==='admin'?undefined:v}))+'</textarea><div class="tools"><button class="btn" data-a="copy">Copy this person</button>'+(PPL.list.length>1?'<button class="btn" data-a="copyall">Copy everyone</button>':'')+'</div>'+(U.allText?'<div class="hint" style="margin:8px 0">This text has all '+PPL.list.length+' people. Paste it somewhere safe.</div><textarea id="bkall" aria-label="Backup of everyone" readonly>'+esc(U.allText)+'</textarea>':'')+
       ''+(S.admin?'<textarea id="rs" placeholder="Paste a backup here" aria-label="Paste backup to restore"></textarea><div class="tools"><button class="btn" data-a="restore">Restore</button><span id="rmsg" class="hint"></span></div>':'<span id="rmsg" class="hint"></span>');
   }
-  h+='<div class="hint" style="margin-top:18px">App version 159.</div>';
+  h+='<div class="hint" style="margin-top:18px">App version 160.</div>';
   if(S.admin)h+='<div class="sec"><h2>Start over</h2></div>';
   if(U.note&&S.admin)h+='<div class="hint" role="status" style="margin:0 0 10px">'+esc(U.note)+'</div>';
   if(!S.admin){}
